@@ -1,44 +1,75 @@
-# Important
+# Getting Started
 
-## Getting Started
+## What is this?
 
-### Java
+This is a Minecraft Forge 1.7.10 development environment template for building on top of DragonAPI.
 
-JDK 8 is required.
+It is largely self-contained, meaning that once the repo is downloaded, 
+no further internet connection should be required.
 
-The JDK can be prepared in `project structure/platform settings/sdks` and 
-set in `settings/build, execution, deployment/build tools/gradle` (if Gradle plugin is used),
-`project structure/project settings/project`, and `project structure/project settings/modules`.
+## Issues
 
-JDK 8 should be available through your package manager or, on Windows,
-be available for download at https://www.openlogic.com/openjdk-downloads.
+Feel free to contribute errors and your ideas and proposals with issues.
 
-Otherwise, the environment variable `JAVA_HOME` can also be set.
+## Rundown
 
-### Gradle
+After cloning the repo, you do not need an internet connection.
+To test this, you can cut your internet connection from here on out.
 
-Gradle is bundled with this repository in `gradle/wrapper/gradle-4.4-bin.zip`.
+### 1. Inject Cache
 
-Gradle should use `gradle/` as its home.
+This template works by injecting the gradle cache at `GRADLE_USER_HOME` with with required dependencies.
+For this, the script `inject` is provided in batch and bash form. This must only be done once.
 
-This is because `caches/` was manually repaired following a number of links being broken from age.
+### 2. Start IDEA
 
-If this breaks at any point, feel free to manually set `GRADLE_USER_HOME`.
+Start IDEA and open the repository.
 
-### BON2
+### 3. Enable Gradle
 
-CodeChickenCore/CodeChickenLib deobfuscates any mod in `run/mods` at runtime.
+..if the extension is not already active.
 
-Mods that are used as libraries, however, might need to be deobfuscated manually to function, such as DragonAPI.
+### 4. Configure Gradle
 
-For this, `util/BON-DEOBFUSCATOR-2.2.3-all.jar` can be used, which provides a GUI for deobfuscation.
+Go to `File | Settings | Build, Execution, Deployment | Build Tools | Gradle`.
+There, set Gradle to use a Java 8 (1.8) JVM.
 
-### Setting Up
+IDEA allows you to download a Java 8 JDK without leaving the IDE,
+but one can also be obtained using a package manager or
+by downloading a build from providers such as 
+[OpenLogic](https://www.openlogic.com/openjdk-downloads)
+or [Amazon](https://aws.amazon.com/de/corretto).
 
-If correctly configured, when opening this repository in IntelliJ IDEA, the gradle plugin should initialize the workspace.
+You must also point Gradle to its home.
+To do this, under `Use Gradle from`, select `Specified location` and select the `gradle` folder in the repository.
 
-Then, to set up the development environment, run the task `setupDecompWorkspace`.
+Once done, click OK. Gradle should now sync the workspace.
 
-### Issues
+### 5. Build the Example
 
-Feel free to share any issue, proposal, or remark with me.
+Once Gradle is done syncing the workspace, open the Gradle window on the right side of the IDE,
+and run the task `forge-1.7.10-offline-template | Tasks | build | build`.
+
+Gradle should now build the jar and put it into the `build/libs` folder.
+
+If you encounter any error here, retry the build. If it doesn't work the second try, feel free to open an issue.
+
+### 6. Run the Live Client
+
+To shorten the development lifecycle, a Minecraft instance can be started by running the task
+`forge-1.7.10-offline-template | Tasks | forgegradle | runClient`.
+
+This Minecraft instance loads any libraries that you compile and any mods you put in `run/mods`.
+
+### Common Errors
+
+> Cannot find symbol / Cannot resolve symbol
+
+This indicates that the mod might have to be deobfuscated.
+
+- Mods placed in `run/mods` are deobfuscated at runtime by CCC.
+- To manually deobfuscate libraries and mods, the bundled BON2-deobfuscator can be used.
+
+> Class not found
+
+This indicates that a dependency is missing. Try to add the missing dependency.
