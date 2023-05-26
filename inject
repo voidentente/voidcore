@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sourceFolder="$(dirname "$0")/gradle/caches"
-destinationFolder="${GRADLE_USER_HOME:-C:/Users/Terminal/.gradle}"
+destinationFolder="${GRADLE_USER_HOME:-~/.gradle}"
 
 mkdir -p "$destinationFolder"
 
