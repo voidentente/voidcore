@@ -1,0 +1,8 @@
+#!/bin/bash
+
+sourceFolder="$(dirname "$0")/gradle/caches"
+destinationFolder="${GRADLE_USER_HOME:-C:/Users/Terminal/.gradle}"
+
+mkdir -p "$destinationFolder"
+
+cp -Rn "$sourceFolder" "$destinationFolder"
