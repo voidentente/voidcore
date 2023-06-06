@@ -1,0 +1,2 @@
+# This file must always define the newest version in the main branch.
+VoidCore:1a

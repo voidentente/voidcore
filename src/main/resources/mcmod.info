@@ -1,14 +1,14 @@
 [
 {
-  "modid": "${modid}",
-  "name": "${name}",
-  "description": "${description}",
-  "version": "${version}",
-  "mcversion": "${mc_version}",
-  "url": "${url}",
+  "modid": "VoidCore",
+  "name": "VoidCore",
+  "description": "",
+  "version": "v${Major}${Minor}",
+  "mcversion": "${MinecraftVersion}",
+  "url": "https://github.com/voidentente/voidcore",
   "updateUrl": "",
-  "authorList": ${authorList},
-  "credits": "${credits}",
+  "authorList": ["Voidentente"],
+  "credits": "Voidentente, Reika",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -20,50 +20,55 @@ buildscript {
     }
 }
 
+allprojects {
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
 apply plugin: 'forge'
 
 dependencies {
     compile files('./lib/DragonAPI 1.7.10 V31b-deobf.jar') // Needs to be manually deobfuscated
     compile files('./lib/RotaryCraft 1.7.10 V31b.jar')
     compile files('./lib/ReactorCraft 1.7.10 V31b.jar')
+    compile files('./lib/VoidMonster 1.7.10 V31a.jar')
 }
 
-ext.configFile = file "build.properties"
+ext.configFile = file "src/main/resources/version_voidcore.properties"
 configFile.withReader {
     def prop = new Properties()
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-group = config.group
-archivesBaseName = config.name + " " + config.mc_version + " " + config.version
-
 minecraft {
-    version = config.mc_version + "-" + config.forge_version
+    version = config.MinecraftVersion + "-" + config.ForgeVersion
     runDir = "run"
 
-    replace "@MODID@", config.modid
-    replaceIn "ExampleMod.java"
+    replace "@MAJOR_VERSION@", config.Major
+    replaceIn "VoidCore.java"
+    replaceIn "version_voidcore.properties"
 
-    replace "@VERSION@", config.version
-    replaceIn "ExampleMod.java"
+    replace "@MINOR_VERSION@", config.Minor
+    replaceIn "VoidCore.java"
+    replaceIn "version_voidcore.properties"
 
-    replace "@DEPENDENCIES@", config.dependencies
-    replaceIn "ExampleMod.java"
+    replace "@DEPENDENCIES@", config.Dependencies
+    replaceIn "VoidCore.java"
 }
 
+group = "voidentente"
+archivesBaseName = "VoidCore " + project.minecraft.version + " V" + config.Major + config.Minor
+
 processResources {
-    inputs.property "modid", config.modid
-    inputs.property "name", config.name
-    inputs.property "version", config.version
-    inputs.property "mc_version", config.mc_version
-    inputs.property "authorList", config.authorList
-    inputs.property "credits", config.credits
-    inputs.property "description", config.description
-    inputs.property "url", config.url
+    inputs.property "Major", config.Major
+    inputs.property "Minor", config.Minor
+    inputs.property "MinecraftVersion", project.minecraft.version
     from(sourceSets.main.resources.srcDirs) {
         include "mcmod.info"
-        expand "modid":config.modid, "name":config.name, "version":config.version, "mc_version":project.minecraft.version, "authorList":config.authorList, "credits":config.credits, "description":config.description, "url":config.url
+        expand "Major":config.Major, "Minor":config.Minor, "MinecraftVersion":project.minecraft.version
     }
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
